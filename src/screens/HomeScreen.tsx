@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { ScrollView, FlatList, Alert } from 'react-native';
+import { FlatList, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import { HeaderContainer, HeaderTitle } from '../components/Header';
-import { Button } from 'react-native';
 
 const HomeScreen = () => {
   const [text, setText] = useState('');
@@ -16,49 +15,55 @@ const HomeScreen = () => {
     if (text.trim()) {
       setItems([...items, { id: Date.now().toString(), text }]);
       setText('');
+      Keyboard.dismiss(); // Fecha o teclado automaticamente
+    } else {
+      Alert.alert('Atenção', 'Digite algo antes de adicionar!');
     }
   };
 
   return (
-    <Container>
-      <HeaderContainer>
-        <HeaderTitle>Meu Primeiro App</HeaderTitle>
-      </HeaderContainer>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <HeaderContainer>
+          <HeaderTitle>Meu Primeiro App</HeaderTitle>
+        </HeaderContainer>
 
-      <Content>
-        <Input
-          placeholder="Digite um item"
-          onChangeText={setText}
-          value={text}
-        />
+        <Content>
+          <Input 
+            placeholder="Digite um item..." 
+            onChangeText={setText} 
+            value={text}
+            placeholderTextColor="#6c757d"
+          />
 
-        <AddButton onPress={addItem}>
-          <ButtonText>Adicionar</ButtonText>
-        </AddButton>
+          <AddButton onPress={addItem} activeOpacity={0.8}>
+            <ButtonText>Adicionar</ButtonText>
+          </AddButton>
 
-        <FlatList
-          data={items}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <ListItem>
-              <ListItemText>{item.text}</ListItemText>
-            </ListItem>
-          )}
-        />
+          <FlatList
+            data={items}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <ListItem>
+                <ListItemText>{item.text}</ListItemText>
+              </ListItem>
+            )}
+          />
 
-        <Button
-          title="Sobre"
-          onPress={() => Alert.alert('Bem-vindo', 'Aplicativo React Native')}
-          color="#6c757d"
-        />
-      </Content>
-    </Container>
+          <AboutButton onPress={() => Alert.alert('Sobre', 'Aplicativo React Native')}>
+            <AboutButtonText>Sobre</AboutButtonText>
+          </AboutButton>
+        </Content>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 };
 
-const Container = styled.ScrollView`
+// Estilos
+
+const Container = styled.View`
   flex: 1;
-  background-color: #f8f9fa;
+  background-color: #f4f4f4;
 `;
 
 const Content = styled.View`
@@ -66,36 +71,58 @@ const Content = styled.View`
 `;
 
 const Input = styled.TextInput`
-  height: 40px;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  padding: 10px;
+  height: 50px;
+  border: 2px solid #007BFF;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #fff;
+  margin-bottom: 12px;
+  elevation: 2;
 `;
 
 const AddButton = styled.TouchableOpacity`
   background-color: #28a745;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+  padding: 14px;
+  border-radius: 8px;
   align-items: center;
+  margin-bottom: 20px;
+  elevation: 3;
 `;
 
 const ButtonText = styled.Text`
   color: white;
+  font-size: 16px;
   font-weight: bold;
+  text-transform: uppercase;
 `;
 
 const ListItem = styled.View`
   background-color: white;
-  padding: 15px;
-  border-radius: 5px;
+  padding: 16px;
+  border-radius: 8px;
   margin-bottom: 10px;
   elevation: 2;
 `;
 
 const ListItemText = styled.Text`
   font-size: 16px;
+  color: #333;
+`;
+
+const AboutButton = styled.TouchableOpacity`
+  background-color: #007BFF;
+  padding: 12px;
+  border-radius: 8px;
+  align-items: center;
+  margin-top: 20px;
+  elevation: 3;
+`;
+
+const AboutButtonText = styled.Text`
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
 `;
 
 export default HomeScreen;
