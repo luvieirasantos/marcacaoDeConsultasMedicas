@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "meuPrimeiroApp",
-    "slug": "meuPrimeiroApp",
+    "name": "marcacaoDeConsultasMedicas",
+    "slug": "marcacaoDeConsultasMedicas",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
