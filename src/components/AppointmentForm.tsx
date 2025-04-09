@@ -3,7 +3,8 @@ import styled from 'styled-components/native';
 import { Button, Input, Text } from 'react-native-elements';
 import { Platform, View, TouchableOpacity } from 'react-native';
 import theme from '../styles/theme';
-import { Doctor } from '../types';
+import { Doctor } from '../types/doctors';
+import { Appointment } from '../types/appointments';
 
 const doctors: Doctor[] = [
    {
@@ -294,4 +295,4 @@ const SubmitButton = styled(Button)`
   margin-top: ${theme.spacing.large}px;
 `;
 
-export default AppointmentForm;  
+export default AppointmentForm; 
